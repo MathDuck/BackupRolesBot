@@ -1,14 +1,14 @@
-const { AkairoClient } = require("discord-akairo");
+const { AkairoClient, CommandHandler } = require("discord-akairo");
 require("dotenv").config();
 
 class DiscordClient extends AkairoClient {
   constructor() {
     super(
       {
-        // Options for Akairo go here.
+        ownerID: process.env.OWNERID,
       },
       {
-        disableEveryone: true,
+        disableMentions: "everyone",
         partials: ["MESSAGE", "CHANNEL", "REACTION"],
         presence: {
           activity: { name: "botActivityStatus", type: "WATCHING" },
@@ -16,6 +16,11 @@ class DiscordClient extends AkairoClient {
         },
       }
     );
+
+    this.commandHandler = new CommandHandler(this, {
+      directory: "./commands/",
+      prefix: process.env.PREFIX,
+    });
   }
 }
 
