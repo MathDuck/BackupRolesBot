@@ -24,6 +24,11 @@ class DiscordClient extends AkairoClient {
     this.commandHandler = new CommandHandler(this, {
       directory: "./commands/",
       prefix: process.env.PREFIX,
+      defaultCooldown: 1000,
+      ignoreCooldown: process.env.ownerID,
+      allowMention: process.env.ALLOWMENTIONCOMMAND,
+      handleEdits: true,
+      commandUtil: true,
     }).loadAll();
 
     this.listenerHandler = new ListenerHandler(this, {
