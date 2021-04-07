@@ -20,7 +20,7 @@ class DiscordClient extends AkairoClient {
     this.commandHandler = new CommandHandler(this, {
       directory: "./commands/",
       prefix: process.env.PREFIX,
-    });
+    }).loadAll();
   }
 }
 
