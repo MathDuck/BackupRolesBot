@@ -6,10 +6,11 @@
   "dependencies": {
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.5.3",
-    "env": "^0.0.2"
+    "dotenv": "^8.2.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "watch": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/MathDuck/BackupRolesBot/issues"
   },
-  "homepage": "https://github.com/MathDuck/BackupRolesBot#readme"
+  "homepage": "https://github.com/MathDuck/BackupRolesBot#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
