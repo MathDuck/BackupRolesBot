@@ -3,7 +3,12 @@ const {
   CommandHandler,
   ListenerHandler,
 } = require("discord-akairo");
-require("dotenv").config();
+const { config } = require("dotenv");
+const { join } = require("path");
+config();
+
+const createDefaultTableFactory = require("./factories/createDefaultTableFactory");
+const serverQueryFactory = require("./factories/serverQueryFactory");
 
 class DiscordClient extends AkairoClient {
   constructor() {
@@ -22,8 +27,14 @@ class DiscordClient extends AkairoClient {
     );
 
     this.commandHandler = new CommandHandler(this, {
-      directory: "./commands/",
-      prefix: process.env.PREFIX,
+      directory: join(__dirname, "./commands/"),
+      prefix: (message) => {
+        let prefix = process.env.PREFIX;
+        if (message.guild) {
+          prefix = checkPrefix(message.guild.id);
+        }
+        return prefix;
+      },
       defaultCooldown: 1000,
       ignoreCooldown: process.env.ownerID,
       allowMention: process.env.ALLOWMENTIONCOMMAND,
@@ -32,7 +43,7 @@ class DiscordClient extends AkairoClient {
     }).loadAll();
 
     this.listenerHandler = new ListenerHandler(this, {
-      directory: "./listeners/",
+      directory: join(__dirname, "./listeners/"),
     });
 
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -40,5 +51,17 @@ class DiscordClient extends AkairoClient {
   }
 }
 
-const client = new DiscordClient();
-client.login(process.env.BOT_TOKEN);
+const startBot = async () => {
+  await new DiscordClient().login(process.env.BOT_TOKEN);
+  createDefaultTableFactory.createDefaultTable();
+};
+
+startBot();
+
+async function checkPrefix(guildId) {
+  const dataExists = await serverQueryFactory.checkDataQuery().get(guildId);
+  if (!dataExists) serverQueryFactory.buildDataQuery().run(guildId);
+  const data = await serverQueryFactory.checkDataQuery().get(guildId);
+  console.log(data.prefix);
+  return data.prefix;
+}
