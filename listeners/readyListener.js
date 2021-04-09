@@ -1,4 +1,5 @@
 const { Listener } = require("discord-akairo");
+const dateFormat = require("../functions/dateFormat");
 
 class ReadyListener extends Listener {
   constructor() {
@@ -12,7 +13,9 @@ class ReadyListener extends Listener {
     const plural = "";
     if (this.client.guilds.cache.size > 1) plural = "s";
     console.log(
-      `Le bot ${this.client.user.tag} est en ligne sur ${this.client.guilds.cache.size} serveur` +
+      `[${dateFormat.getDate(Date.now())}] Le bot ${
+        this.client.user.tag
+      } est en ligne sur ${this.client.guilds.cache.size} serveur` +
         plural +
         `!`
     );

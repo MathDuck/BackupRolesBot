@@ -1,5 +1,6 @@
 const { Listener } = require("discord-akairo");
 const guildRoleQueryFactory = require("../factories/guildRoleQueryFactory");
+const dateFormat = require("../functions/dateFormat");
 
 class GuildMemberAddListener extends Listener {
   constructor() {
@@ -29,7 +30,11 @@ class GuildMemberAddListener extends Listener {
           .removeRolestoDatabaseQuery()
           .run(member.guild.id, member.id, role.role_id);
       });
-      console.log(`Rôles de ${member.user.tag} restaurés.`);
+      console.log(
+        `[${dateFormat.getDate(Date.now())}] Rôles de ${
+          member.user.tag
+        } restaurés.`
+      );
     }
   }
 }

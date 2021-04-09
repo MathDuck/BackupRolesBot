@@ -6,8 +6,7 @@ class PrefixCommand extends Command {
     super("prefix", {
       aliases: ["prefix"],
       category: "owner",
-      cooldown: 5000,
-      ratelimit: 2,
+      ownerOnly: true,
       args: [
         {
           id: "prefix",

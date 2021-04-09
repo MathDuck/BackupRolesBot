@@ -1,5 +1,6 @@
 const { Listener } = require("discord-akairo");
 const guildRoleQueryFactory = require("../factories/guildRoleQueryFactory");
+const dateFormat = require("../functions/dateFormat");
 
 class GuildMemberRemoveListener extends Listener {
   constructor() {
@@ -22,10 +23,10 @@ class GuildMemberRemoveListener extends Listener {
           .run(member.guild.id, member.id, role.id);
       });
       console.log(
-        `Rôles de ${member.user.tag} sauvegardés en base de données.`
+        `[${dateFormat.getDate(Date.now())}] Rôles de ${
+          member.user.tag
+        } sauvegardés en base de données.`
       );
-    } else {
-      console.log(`Déjà en BDD.`);
     }
   }
 }

@@ -1,5 +1,6 @@
 const { Listener } = require("discord-akairo");
 const serverQueryFactory = require("../factories/guildQueryFactory");
+const dateFormat = require("../functions/dateFormat");
 
 class GuildCreateListener extends Listener {
   constructor(client) {
@@ -17,7 +18,11 @@ class GuildCreateListener extends Listener {
     if (!serverData) {
       serverQueryFactory.buildDataQuery().run(guild.id, guild.name);
     }
-    console.log(`Le bot a rejoint le serveur ${guild.name} (ID: ${guild.id}).`);
+    console.log(
+      `[${dateFormat.getDate(Date.now())}] Le bot a rejoint le serveur ${
+        guild.name
+      } (ID: ${guild.id}).`
+    );
   }
 }
 
