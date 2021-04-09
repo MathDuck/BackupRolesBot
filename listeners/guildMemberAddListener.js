@@ -18,12 +18,10 @@ class GuildMemberAddListener extends Listener {
     if (data) {
       data.forEach((role) => {
         const roleExists = member.guild.roles.cache.get(role.role_id);
-        if (roleExists) {
-          member.roles.add(role.role_id);
-          guildRoleQueryFactory
-            .removeRolestoDatabaseQuery()
-            .run(member.guild.id, member.id, role.role_id);
-        }
+        if (roleExists) member.roles.add(role.role_id);
+        guildRoleQueryFactory
+          .removeRolestoDatabaseQuery()
+          .run(member.guild.id, member.id, role.role_id);
       });
       console.log(`Rôles de ${member.user.tag} restaurés.`);
     }
