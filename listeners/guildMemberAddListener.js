@@ -18,7 +18,13 @@ class GuildMemberAddListener extends Listener {
     if (data) {
       data.forEach((role) => {
         const roleExists = member.guild.roles.cache.get(role.role_id);
-        if (roleExists) member.roles.add(role.role_id);
+        if (roleExists) {
+          try {
+            member.roles.add(role.role_id);
+          } catch (err) {
+            console.log("Error - Probably Permission Error");
+          }
+        }
         guildRoleQueryFactory
           .removeRolestoDatabaseQuery()
           .run(member.guild.id, member.id, role.role_id);
