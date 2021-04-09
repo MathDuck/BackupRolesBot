@@ -7,8 +7,8 @@ const { config } = require("dotenv");
 const { join } = require("path");
 config();
 
+const checkPrefix = require("./functions/checkPrefix");
 const createDefaultTableFactory = require("./factories/createDefaultTableFactory");
-const serverQueryFactory = require("./factories/serverQueryFactory");
 
 class DiscordClient extends AkairoClient {
   constructor() {
@@ -31,7 +31,7 @@ class DiscordClient extends AkairoClient {
       prefix: (message) => {
         let prefix = process.env.PREFIX;
         if (message.guild) {
-          prefix = checkPrefix(message.guild.id);
+          prefix = checkPrefix.check(message.guild.id);
         }
         return prefix;
       },
@@ -57,11 +57,3 @@ const startBot = async () => {
 };
 
 startBot();
-
-async function checkPrefix(guildId) {
-  const dataExists = await serverQueryFactory.checkDataQuery().get(guildId);
-  if (!dataExists) serverQueryFactory.buildDataQuery().run(guildId);
-  const data = await serverQueryFactory.checkDataQuery().get(guildId);
-  console.log(data.prefix);
-  return data.prefix;
-}
