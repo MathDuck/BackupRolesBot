@@ -1,6 +1,7 @@
 const {
   AkairoClient,
   CommandHandler,
+  InhibitorHandler,
   ListenerHandler,
 } = require("discord-akairo");
 const { config } = require("dotenv");
@@ -42,12 +43,25 @@ class DiscordClient extends AkairoClient {
       commandUtil: true,
     }).loadAll();
 
+    this.inhibitorHandler = new InhibitorHandler(this, {
+      directory: join(__dirname, "./inhibitors/"),
+    });
+
     this.listenerHandler = new ListenerHandler(this, {
       directory: join(__dirname, "./listeners/"),
     });
 
+    this.listenerHandler.setEmitters({
+      commandHandler: this.commandHandler,
+      inhibitorHandler: this.inhibitorHandler,
+      listenerHandler: this.listenerHandler,
+    });
+
     this.commandHandler.useListenerHandler(this.listenerHandler);
     this.listenerHandler.loadAll();
+
+    this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
+    this.inhibitorHandler.loadAll();
   }
 }
 

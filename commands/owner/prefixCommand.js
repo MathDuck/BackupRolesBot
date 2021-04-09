@@ -1,5 +1,5 @@
 const { Command } = require("discord-akairo");
-const serverQueryFactory = require("../../factories/serverQueryFactory");
+const serverQueryFactory = require("../../factories/guildQueryFactory");
 
 class PrefixCommand extends Command {
   constructor() {

@@ -1,4 +1,4 @@
-const serverQueryFactory = require("../factories/serverQueryFactory");
+const serverQueryFactory = require("../factories/guildQueryFactory");
 
 module.exports = {
   check: async function (guildId) {

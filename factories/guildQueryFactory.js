@@ -9,7 +9,7 @@ module.exports = {
 
   buildDataQuery: function () {
     return Database.getConnector().prepare(
-      "INSERT INTO guilds (guild_id) VALUES (?)"
+      "INSERT INTO guilds (guild_id, guild_name) VALUES (?, ?)"
     );
   },
 
