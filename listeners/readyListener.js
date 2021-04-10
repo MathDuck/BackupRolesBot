@@ -10,7 +10,7 @@ class ReadyListener extends Listener {
   }
 
   exec() {
-    const plural = "";
+    let plural = "";
     if (this.client.guilds.cache.size > 1) plural = "s";
     console.log(
       `[${dateFormat.getDate(Date.now())}] Le bot ${
