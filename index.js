@@ -21,7 +21,7 @@ class DiscordClient extends AkairoClient {
         disableMentions: "everyone",
         partials: ["MESSAGE", "CHANNEL", "REACTION"],
         presence: {
-          activity: { name: "botActivityStatus", type: "WATCHING" },
+          activity: { name: process.env.CUSTOM_STATUS, type: "WATCHING" },
           status: "online",
         },
       }
